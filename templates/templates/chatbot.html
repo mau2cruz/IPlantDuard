@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot de Asesoría Vegetal - IPlantGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+
+        <!-- NAVEGACIÓN SUPERIOR -->
+        <nav class="navbar">
+            <div class="nav-logo">🌿 IPlantGuard</div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Inicio</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+                <a href="/historial" class="nav-link">📜 Historial</a>
+                <a href="/biblioteca" class="nav-link">📚 Biblioteca</a>
+                <a href="/demo" class="nav-link">🎯 Demo</a>
+                <a href="/chatbot" class="nav-link active">💬 Chatbot</a>
+                <a href="/perfil" class="nav-link">⚙️ Perfil</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1 class="titulo">💬 Chatbot de Asesoría Vegetal</h1>
+            <p class="subtitulo">Resuelve tus dudas sobre cuidado de plantas</p>
+        </header>
+
+        <div class="tarjeta chatbot-container">
+            <p class="chatbot-intro">
+                Aquí encontrarás respuestas a las preguntas más frecuentes sobre cuidado vegetal. 
+                Haz clic en cualquier pregunta para ver la respuesta.
+            </p>
+
+            <div class="faq-list">
+                {% for question in faq %}
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span class="faq-icon">➕</span>
+                        <h3>{{ question.question }}</h3>
+                    </div>
+                    <div class="faq-answer" style="display: none;">
+                        <p>{{ question.answer }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- CONSULTA PERSONALIZADA -->
+        <div class="tarjeta">
+            <h2>💭 ¿Tienes otra pregunta?</h2>
+            <p>Para preguntas específicas sobre tus plantas, considera:</p>
+            <ul class="lista-recomendaciones">
+                <li>Usar nuestro verificador de imágenes para diagnósticos precisos.</li>
+                <li>Consultar la Biblioteca de Enfermedades para síntomas detallados.</li>
+                <li>Contactar a un especialista agrónomo si el problema persiste.</li>
+            </ul>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="botones-final">
+            <a href="/" class="btn-primario">🔄 Analizar Planta</a>
+            <a href="/biblioteca" class="btn-secundario">📚 Ver Biblioteca</a>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
