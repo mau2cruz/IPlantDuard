@@ -319,6 +319,48 @@ hr {
 }
 
 /* -----------------------------------------------------
+   MODAL CÁMARA WEB (JS)
+----------------------------------------------------- */
+#modal-camara {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#video-webcam {
+    width: 90%;
+    max-width: 640px;
+    border-radius: 10px;
+    border: 4px solid #fff;
+    margin-bottom: 15px;
+}
+
+.controles-camara {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-camara-accion {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-capturar { background: #e74c3c; color: white; }
+.btn-cerrar { background: #95a5a6; color: white; }
+
+/* Ocultar canvas usado para la captura */
+#canvas-webcam { display: none; }
+
+/* -----------------------------------------------------
    RESPONSIVIDAD
 ----------------------------------------------------- */
 
