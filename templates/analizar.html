@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Análisis - IPlantGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+
+        <h1 class="titulo">Nuevo Análisis</h1>
+        <p class="subtitulo">Seleccione el método de entrada para el diagnóstico</p>
+
+        <div class="tarjeta">
+
+            <!-- SUBIR DESDE ARCHIVO -->
+            <h2>📂 Subir / Capturar</h2>
+            <form action="/analizar_archivo" method="POST" enctype="multipart/form-data" class="bloque">
+                <label class="boton-archivo">
+                    📸 Tomar Foto / Seleccionar Imagen
+                    <input type="file" name="archivo" accept="image/*" required>
+                </label>
+                <button type="submit" class="btn-primario">Procesar</button>
+            </form>
+
+            <hr class="solo-pc">
+
+            <!-- CÁMARA PC -->
+            <div class="solo-pc">
+                <h2>📸 Cámara Web (PC)</h2>
+                <div class="bloque">
+                    <a href="/foto_pc" class="btn-secundario">Capturar Foto</a>
+                </div>
+                <hr>
+            </div>
+
+            <!-- CÁMARA CELULAR (SOLO PC) -->
+            <div class="solo-pc">
+                <h2>📱 Cámara Externa (IP)</h2>
+                <form action="/foto_ip" method="POST" class="bloque">
+                    <input type="text" name="ip" placeholder="Ej: 192.168.1.23:8080" pattern="^[0-9]{1,3}(\.[0-9]{1,3}){3}\:[0-9]+$" required>
+                    <button class="btn-secundario">Conectar y Capturar</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="botones-final">
+            <a href="/" class="btn-secundario">⬅ Volver al Inicio</a>
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
