@@ -57,3 +57,63 @@ inputsArchivo.forEach(input => {
         }
     });
 });
+
+// ------------------------------------------------------
+// LÓGICA DE CÁMARA WEB (JS)
+// ------------------------------------------------------
+const modalCamara = document.getElementById("modal-camara");
+const videoWebcam = document.getElementById("video-webcam");
+const canvasWebcam = document.getElementById("canvas-webcam");
+const formWebcam = document.getElementById("form-webcam");
+let streamActual = null;
+
+function iniciarWebcam() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                streamActual = stream;
+                videoWebcam.srcObject = stream;
+                modalCamara.style.display = "flex";
+            })
+            .catch(err => {
+                alert("No se pudo acceder a la cámara: " + err.message);
+            });
+    } else {
+        alert("Tu navegador no soporta acceso a cámara web.");
+    }
+}
+
+function cerrarWebcam() {
+    if (streamActual) {
+        streamActual.getTracks().forEach(track => track.stop());
+        streamActual = null;
+    }
+    modalCamara.style.display = "none";
+}
+
+function capturarWebcam() {
+    if (!streamActual) return;
+
+    // Ajustar tamaño del canvas al video
+    canvasWebcam.width = videoWebcam.videoWidth;
+    canvasWebcam.height = videoWebcam.videoHeight;
+    
+    // Dibujar frame actual
+    const ctx = canvasWebcam.getContext("2d");
+    ctx.drawImage(videoWebcam, 0, 0, canvasWebcam.width, canvasWebcam.height);
+
+    // Convertir a Blob y enviar
+    canvasWebcam.toBlob(blob => {
+        // Crear un archivo simulado
+        const file = new File([blob], "captura_webcam.jpg", { type: "image/jpeg" });
+        
+        // Asignarlo al input file del formulario oculto
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        document.getElementById("input-webcam-file").files = dataTransfer.files;
+
+        // Enviar formulario
+        cerrarWebcam();
+        formWebcam.submit();
+    }, "image/jpeg");
+}
