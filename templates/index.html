@@ -30,9 +30,9 @@
 
             <hr class="solo-pc">
 
-            <!-- CÁMARA PC -->
+            <!-- CÁMARA PC (CLIENT SIDE) -->
             <div class="bloque solo-pc">
-                <a href="/foto_pc" class="btn-secundario">📸 Usar Cámara de PC (Webcam)</a>
+                <button type="button" class="btn-secundario" onclick="iniciarWebcam()">📸 Usar Cámara de PC (Webcam)</button>
             </div>
 
             <hr class="solo-pc">
@@ -46,6 +46,22 @@
         </div>
 
     </div>
+
+    <!-- MODAL CÁMARA -->
+    <div id="modal-camara">
+        <video id="video-webcam" autoplay playsinline></video>
+        <canvas id="canvas-webcam"></canvas>
+        <div class="controles-camara">
+            <button class="btn-camara-accion btn-capturar" onclick="capturarWebcam()">🔘 Capturar</button>
+            <button class="btn-camara-accion btn-cerrar" onclick="cerrarWebcam()">❌ Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Formulario oculto para enviar la foto capturada -->
+    <form id="form-webcam" action="/analizar_archivo" method="POST" enctype="multipart/form-data" style="display:none;">
+        <input type="file" name="archivo" id="input-webcam-file">
+    </form>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
