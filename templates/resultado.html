@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Diagnóstico - IPlantGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+
+        <h1 class="titulo">Resultados del Diagnóstico</h1>
+        <p class="subtitulo">Informe generado automáticamente</p>
+
+        {% if datos.error %}
+        <div class="tarjeta error">
+            <h2>⚠️ Error en el Análisis</h2>
+            <p>{{ datos.error }}</p>
+        </div>
+        {% else %}
+
+        <div class="tarjeta resultados">
+
+            <!-- ESTADO GENERAL -->
+            <!-- Uso lógica segura: si datos.health_assessment existe, verificamos is_healthy. Si no, mostramos estado desconocido o error -->
+            {% if datos.health_assessment %}
+                <div class="estado-panel {% if datos.health_assessment.is_healthy %}estado-saludable{% else %}estado-infectado{% endif %}">
+                    <div class="estado-texto">
+                        {% if datos.health_assessment.is_healthy %}
+                        <span>🛡️ Planta Saludable</span>
+                        {% else %}
+                        <span>⚠️ Planta Infectada</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- ENFERMEDADES DETECTADAS -->
+                {% if not datos.health_assessment.is_healthy %}
+                <h3 class="seccion-titulo">Detecciones</h3>
+                {% if datos.health_assessment.diseases %}
+                <ul class="lista-dashboard">
+                    {% for d in datos.health_assessment.diseases %}
+                    <li class="item-dashboard">
+                        <strong>{{ d.name }}</strong>
+                        <span class="badge-severidad">Severidad: {{ d.severity }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No se identificaron patógenos específicos.</p>
+                {% endif %}
+                <hr>
+                {% endif %}
+
+                <!-- MÉTRICAS DETALLADAS -->
+                <h3 class="seccion-titulo">Análisis Detallado</h3>
+                <ul class="lista-recomendaciones">
+                    {% if datos.health_assessment.reasons %}
+                    {% for r in datos.health_assessment.reasons %}
+                    <li>{{ r }}</li>
+                    {% endfor %}
+                    {% else %}
+                    <li>Sin hallazgos adicionales.</li>
+                    {% endif %}
+                </ul>
+
+            {% else %}
+                <!-- Caso raro donde la API responde pero sin health_assessment -->
+                <div class="tarjeta error">
+                    <p>No se pudo determinar el estado de salud. Respuesta incompleta del servidor.</p>
+                </div>
+            {% endif %}
+
+            <hr>
+
+            <!-- RECOMENDACIONES -->
+            <h3 class="seccion-titulo">Tratamiento y Cuidados</h3>
+            <ul class="lista-recomendaciones">
+                {% if datos.recommendations %}
+                {% for r in datos.recommendations %}
+                <li>{{ r }}</li>
+                {% endfor %}
+                {% else %}
+                <li>No hay recomendaciones específicas disponibles.</li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+        <!-- BOTONES INFERIORES -->
+        <div class="botones-final">
+            <a href="/" class="btn-primario">🔄 Nuevo Análisis</a>
+            <button onclick="window.print()" class="btn-secundario">🖨️ Guardar Reporte</button>
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

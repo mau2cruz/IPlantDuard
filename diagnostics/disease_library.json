@@ -1,0 +1,34 @@
+{
+  "diseases": [
+    {
+      "id": 1,
+      "name": "Mildiu",
+      "symptoms": "Manchas blancas polvorientas en hojas y tallos",
+      "prevention": "Mantén buena ventilación, evita mojadura foliar"
+    },
+    {
+      "id": 2,
+      "name": "Oidio",
+      "symptoms": "Polvo blanco en superficies de hojas, distorsión del crecimiento",
+      "prevention": "Mejora circulación de aire, reduce humedad"
+    },
+    {
+      "id": 3,
+      "name": "Roya",
+      "symptoms": "Pústulas naranjas o marrones en envés de hojas",
+      "prevention": "Mantén plantas secas, retira hojas infectadas"
+    },
+    {
+      "id": 4,
+      "name": "Antracnosis",
+      "symptoms": "Manchas oscuras con bordes acuosos en hojas y tallos",
+      "prevention": "Mejora drenaje, evita encharcamientos"
+    },
+    {
+      "id": 5,
+      "name": "Botrytis",
+      "symptoms": "Moho gris en flores y frutas, especialmente en climas húmedos",
+      "prevention": "Aumenta ventilación, reduce humedad"
+    }
+  ]
+}

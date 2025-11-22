@@ -1,0 +1,29 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "¿Con qué frecuencia debo regar mis plantas?",
+      "answer": "Depende del tipo de planta y el clima. La mayoría necesita riego cuando el suelo está seco al tacto. Generalmente es cada 2-3 días en verano y menos frecuente en invierno."
+    },
+    {
+      "id": 2,
+      "question": "¿Cuáles son los signos de una planta enferma?",
+      "answer": "Hojas amarillas, manchas oscuras, marchitamiento, crecimiento lento y presencia de insectos son señales de alerta."
+    },
+    {
+      "id": 3,
+      "question": "¿Cómo puedo mejorar la iluminación de mis plantas?",
+      "answer": "Coloca tus plantas cerca de ventanas con luz natural. Si esto no es posible, considera luces de cultivo LED."
+    },
+    {
+      "id": 4,
+      "question": "¿Qué nutrientes necesitan las plantas?",
+      "answer": "Las plantas necesitan nitrógeno (N), fósforo (P) y potasio (K), junto con micronutrientes como hierro, magnesio y zinc."
+    },
+    {
+      "id": 5,
+      "question": "¿Cómo sé si estoy regando demasiado?",
+      "answer": "El exceso de agua causa pudrición de raíces, hojas amarillas y olor a humedad. Asegúrate de que las macetas tengan buen drenaje."
+    }
+  ]
+}

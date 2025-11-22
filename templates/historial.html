@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Diagnósticos - IPlantGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+
+        <!-- NAVEGACIÓN SUPERIOR -->
+        <nav class="navbar">
+            <div class="nav-logo">🌿 IPlantGuard</div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Inicio</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+                <a href="/historial" class="nav-link active">📜 Historial</a>
+                <a href="/biblioteca" class="nav-link">📚 Biblioteca</a>
+                <a href="/demo" class="nav-link">🎯 Demo</a>
+                <a href="/chatbot" class="nav-link">💬 Chatbot</a>
+                <a href="/perfil" class="nav-link">⚙️ Perfil</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1 class="titulo">📜 Historial de Diagnósticos</h1>
+            <p class="subtitulo">Revisa todos tus análisis anteriores</p>
+        </header>
+
+        <div class="tarjeta historial-container">
+            {% if diagnostics %}
+            <div class="historial-list">
+                {% for diag in diagnostics %}
+                <div class="historial-item">
+                    <div class="historial-left">
+                        <div class="historial-fecha">
+                            📅 <strong>{{ diag.timestamp[:10] }}</strong>
+                            <span class="hora">{{ diag.timestamp[11:16] }}</span>
+                        </div>
+                        <div class="historial-imagen">
+                            🖼️ <strong>{{ diag.image }}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="historial-middle">
+                        <p class="historial-plant">🌱 Planta: <strong>{{ diag.plant_type }}</strong></p>
+                    </div>
+
+                    <div class="historial-right">
+                        {% if diag.is_healthy %}
+                        <span class="historial-badge historial-saludable">✅ Saludable</span>
+                        {% else %}
+                        <span class="historial-badge historial-infectada">⚠️ Infectada</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="vacio-mensaje">
+                <p>📭 No hay diagnósticos aún.</p>
+                <a href="/" class="btn-primario">Realizar Primer Análisis</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- BOTONES -->
+        <div class="botones-final">
+            <a href="/" class="btn-primario">🔄 Nuevo Análisis</a>
+            <a href="/dashboard" class="btn-secundario">📊 Ver Dashboard</a>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
