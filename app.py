@@ -188,34 +188,14 @@ def chatbot():
 # ----------------------------------------------------
 @app.route("/demo")
 def demo():
-    # Crear imágenes de demo si no existen
-    demo_folder = app.config["UPLOAD_FOLDER"]
-    demo_images = []
-    
-    # Definir imágenes de demostración (nombre y descripción)
-    demo_data = [
+    # Imágenes de demostración predefinidas
+    demo_images = [
         {"name": "demo_planta_saludable.jpg", "desc": "Planta Saludable"},
         {"name": "demo_hoja_enferma.jpg", "desc": "Hoja con Enfermedad"},
         {"name": "demo_planta_debil.jpg", "desc": "Planta Débil"},
         {"name": "demo_marcha.jpg", "desc": "Planta Marchita"},
         {"name": "demo_mildiu.jpg", "desc": "Síntomas de Mildiu"}
     ]
-    
-    # Crear imágenes de demo si no existen
-    for demo in demo_data:
-        demo_path = os.path.join(demo_folder, demo["name"])
-        if not os.path.exists(demo_path):
-            try:
-                import numpy as np
-                # Crear imagen de demostración (imagen verde simple)
-                img = np.ones((300, 400, 3), dtype=np.uint8) * [34, 139, 34]  # Verde
-                # Agregar texto
-                cv2.putText(img, demo["desc"], (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-                cv2.imwrite(demo_path, img)
-            except:
-                pass
-        
-        demo_images.append({"name": demo["name"], "desc": demo["desc"]})
     
     return render_template("demo.html", demo_images=demo_images)
 
