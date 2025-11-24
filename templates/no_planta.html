@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error de Validación - IPlantGuard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <div class="contenedor">
+
+        <!-- NAVEGACIÓN SUPERIOR -->
+        <nav class="navbar">
+            <div class="nav-logo">🌿 IPlantGuard</div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link active">Inicio</a>
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+                <a href="/historial" class="nav-link">📜 Historial</a>
+                <a href="/biblioteca" class="nav-link">📚 Biblioteca</a>
+                <a href="/demo" class="nav-link">🎯 Demo</a>
+                <a href="/chatbot" class="nav-link">💬 Chatbot</a>
+                <a href="/perfil" class="nav-link">⚙️ Perfil</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1 class="titulo">❌ Imagen No Válida</h1>
+            <p class="subtitulo">No se puede procesar esta imagen</p>
+        </header>
+
+        <div class="tarjeta error">
+            <h2>⚠️ Esto no parece ser una planta o cultivo</h2>
+            
+            <p style="font-size: 1.1rem; color: #2c3e50; margin: 20px 0;">
+                IPlantGuard está diseñado específicamente para <strong>analizar plantas y cultivos</strong>.
+            </p>
+
+            <p style="color: #576574; margin: 15px 0;">
+                La imagen que has proporcionado no contiene características de una planta (como hojas, tallos o estructura vegetal).
+                Ejemplos de lo que <strong>NO</strong> podemos analizar:
+            </p>
+
+            <ul class="lista-recomendaciones" style="text-align: left; max-width: 600px; margin: 20px auto;">
+                <li>📺 Objetos electrónicos (televisores, teléfonos, etc.)</li>
+                <li>🏠 Elementos de decoración o construcción</li>
+                <li>👤 Personas o animales</li>
+                <li>🖼️ Imágenes genéricas o abstracciones</li>
+                <li>🗂️ Documentos o texto</li>
+            </ul>
+
+            <p style="color: #576574; margin: 20px 0;">
+                Por favor, intenta con una imagen clara de:
+            </p>
+
+            <ul class="lista-recomendaciones" style="text-align: left; max-width: 600px; margin: 20px auto;">
+                <li>🌱 Plantas en maceta o jardín</li>
+                <li>🌿 Hojas individuales</li>
+                <li>🌾 Cultivos de campo</li>
+                <li>🌳 Árboles o arbustos</li>
+                <li>📸 Cualquier estructura vegetal</li>
+            </ul>
+
+            <div style="background: #f9f9f9; border-left: 5px solid #3498db; padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center;">
+                <p style="margin: 0; color: #2c3e50;">
+                    <strong>💡 Consejo:</strong> Asegúrate de que la planta sea el objeto principal de la foto y que haya buena iluminación.
+                </p>
+            </div>
+        </div>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <div class="botones-final">
+            <a href="/" class="btn-primario">📸 Intentar con otra imagen</a>
+            <a href="/demo" class="btn-secundario">🎯 Probar con demo</a>
+            <a href="/chatbot" class="btn-secundario">💬 Hacer una pregunta</a>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

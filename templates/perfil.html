@@ -129,13 +129,24 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('✅ Preferencias guardadas correctamente');
-                    // Aplicar tema si cambió
+                    // Guardar tema en localStorage
                     if (preferences.theme === 'dark') {
                         document.body.classList.add('dark-theme');
-                    } else {
+                        localStorage.setItem('iplantguard-theme', 'dark');
+                    } else if (preferences.theme === 'light') {
                         document.body.classList.remove('dark-theme');
+                        localStorage.setItem('iplantguard-theme', 'light');
+                    } else if (preferences.theme === 'auto') {
+                        // Auto-detectar basado en preferencia del sistema
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            document.body.classList.add('dark-theme');
+                            localStorage.setItem('iplantguard-theme', 'dark');
+                        } else {
+                            document.body.classList.remove('dark-theme');
+                            localStorage.setItem('iplantguard-theme', 'light');
+                        }
                     }
+                    alert('✅ Preferencias guardadas correctamente');
                 } else {
                     alert('❌ Error al guardar preferencias');
                 }
@@ -145,8 +156,13 @@
 
         // Aplicar tema al cargar
         window.addEventListener('DOMContentLoaded', function() {
-            if ('{{ settings.theme }}' === 'dark') {
+            const settingsTheme = '{{ settings.theme }}';
+            if (settingsTheme === 'dark') {
                 document.body.classList.add('dark-theme');
+                localStorage.setItem('iplantguard-theme', 'dark');
+            } else if (settingsTheme === 'light') {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('iplantguard-theme', 'light');
             }
         });
     </script>
