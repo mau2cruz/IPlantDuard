@@ -17,6 +17,19 @@
     --fuente-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* TEMA OSCURO */
+body.dark-theme {
+    --color-fondo: #1a1a1a;       /* Negro profundo */
+    --color-tarjeta: #2d2d2d;     /* Gris oscuro */
+    --color-texto: #e0e0e0;       /* Gris claro para texto */
+    --color-primario: #27ae60;    /* Verde primario */
+    --color-primario-hover: #229954; /* Verde más oscuro */
+    --color-borde: #404040;       /* Gris más oscuro */
+    --color-alerta: #e74c3c;      /* Rojo (igual) */
+    --color-exito: #27ae60;       /* Verde (igual) */
+    --sombra-suave: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
 /* -----------------------------------------------------
    RESET & BASE
 ----------------------------------------------------- */
@@ -433,7 +446,7 @@ hr {
 /* NAVBAR - NAVEGACIÓN SUPERIOR */
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background: var(--color-primario);
     padding: 15px 30px;
@@ -441,13 +454,16 @@ hr {
     margin-bottom: 30px;
     box-shadow: var(--sombra-suave);
     flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
 }
 
 .nav-logo {
     font-size: 1.3rem;
     font-weight: 700;
     color: white;
-    margin-right: 20px;
+    text-align: center;
+    flex: 0 1 auto;
 }
 
 .nav-menu {
@@ -963,6 +979,164 @@ hr {
     border-left: 5px solid var(--color-primario);
 }
 
+/* ===================================================
+   TEMA OSCURO - ESTILOS GENERALES
+=================================================== */
+
+/* Tarjeta en modo oscuro */
+body.dark-theme .tarjeta {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .tarjeta:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-theme .tarjeta h2 {
+    border-bottom-color: #404040;
+}
+
+/* Inputs en modo oscuro */
+body.dark-theme input[type="text"],
+body.dark-theme .preference-select {
+    background-color: #404040;
+    color: #e0e0e0;
+    border-color: #505050;
+}
+
+body.dark-theme input[type="text"]:focus,
+body.dark-theme .preference-select:focus {
+    border-color: var(--color-primario);
+    background-color: #505050;
+}
+
+/* Cards de estadísticas en modo oscuro */
+body.dark-theme .stat-card {
+    border-left-color: var(--color-primario);
+}
+
+body.dark-theme .stat-content h3 {
+    color: #a0a0a0;
+}
+
+/* Items del historial en modo oscuro */
+body.dark-theme .historial-item {
+    background-color: #404040;
+    border-left-color: var(--color-primario);
+}
+
+body.dark-theme .historial-item:hover {
+    background-color: #505050;
+}
+
+/* Disease cards en modo oscuro */
+body.dark-theme .disease-card {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+body.dark-theme .disease-card:hover {
+    border-color: var(--color-primario);
+}
+
+body.dark-theme .disease-header {
+    border-bottom-color: #404040;
+}
+
+body.dark-theme .disease-section h4 {
+    color: var(--color-primario);
+}
+
+body.dark-theme .disease-section p {
+    color: #b0b0b0;
+}
+
+/* FAQ en modo oscuro */
+body.dark-theme .faq-item {
+    border-color: #404040;
+}
+
+body.dark-theme .faq-question {
+    background-color: #404040;
+    color: #e0e0e0;
+}
+
+body.dark-theme .faq-question:hover {
+    background-color: #505050;
+}
+
+body.dark-theme .faq-answer {
+    background-color: #2d2d2d;
+    border-top-color: #404040;
+}
+
+body.dark-theme .faq-answer p {
+    color: #b0b0b0;
+}
+
+/* Items del panel en modo oscuro */
+body.dark-theme .item-dashboard {
+    background-color: #404040;
+    border-color: #505050;
+}
+
+body.dark-theme .item-dashboard strong {
+    color: #e0e0e0;
+}
+
+body.dark-theme .preference-group {
+    background-color: #404040;
+}
+
+body.dark-theme .info-item {
+    background-color: #404040;
+}
+
+body.dark-theme .info-label {
+    color: #e0e0e0;
+}
+
+/* Botones en modo oscuro */
+body.dark-theme .btn-acceso {
+    background-color: #404040;
+    color: #e0e0e0;
+    border-color: #505050;
+}
+
+body.dark-theme .btn-acceso:hover {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+body.dark-theme .boton-archivo {
+    background-color: #404040;
+    border-color: #505050;
+    color: #e0e0e0;
+}
+
+body.dark-theme .boton-archivo:hover {
+    background-color: #505050;
+    color: var(--color-primario);
+}
+
+/* Editor en modo oscuro */
+body.dark-theme #canvas-editor {
+    border-color: #505050;
+}
+
+body.dark-theme .editor-preview {
+    background-color: #404040;
+}
+
+body.dark-theme .control-grupo input[type="range"] {
+    background-color: #505050;
+}
+
+/* Consejo card en modo oscuro */
+body.dark-theme .consejo-card {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(52, 152, 219, 0.1) 100%);
+}
+
 /* RESPONSIVE MEJORADO */
 @media (max-width: 768px) {
     .navbar {
@@ -973,6 +1147,7 @@ hr {
 
     .nav-logo {
         margin-right: 0;
+        width: 100%;
     }
 
     .nav-menu {

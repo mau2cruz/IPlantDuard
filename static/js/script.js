@@ -150,9 +150,17 @@ function toggleAnswer(element) {
 function setTheme(theme) {
     if (theme === 'dark') {
         document.body.classList.add('dark-theme');
+        localStorage.setItem('iplantguard-theme', 'dark');
     } else {
         document.body.classList.remove('dark-theme');
+        localStorage.setItem('iplantguard-theme', 'light');
     }
+}
+
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('iplantguard-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
 }
 
 // Aplicar tema guardado al cargar
