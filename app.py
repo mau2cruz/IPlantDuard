@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import os
 import json
+import shutil # Para copiar archivos
 from datetime import datetime
 from detector_backend import DetectorPlagas
 from camera_backend import CameraManager
 from quality_checker import QualityChecker
 import cv2
+from PIL import Image, ImageStat # Para verificación de imágenes
 
 # ----------------------------------------------------
 # CONFIGURACIÓN DEL PROYECTO
@@ -15,6 +17,7 @@ import cv2
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+DEMO_IMAGES_STATIC_FOLDER = os.path.join(STATIC_DIR, "images", "demo") # Nueva ruta para demo
 
 app = Flask(__name__, static_folder=STATIC_DIR, template_folder=TEMPLATE_DIR)
 app.config["UPLOAD_FOLDER"] = os.path.join(BASE_DIR, "uploads")
@@ -62,6 +65,41 @@ def add_diagnostic_record(image_name, analysis_result):
     diagnostics["records"].append(record)
     save_json_file(DIAGNOSTICS_DB, diagnostics)
     return record
+
+# ----------------------------------------------------
+# FUNCIÓN DE VERIFICACIÓN DE IMAGEN (NO PLANTA)
+# ----------------------------------------------------
+def is_likely_plant(image_path, green_threshold=0.15):
+    """Verifica si una imagen contiene una cantidad significativa de verde,
+       indicando que podría ser una planta. Retorna True si es probable,
+       False en caso contrario.
+    """
+    try:
+        img = Image.open(image_path).convert("RGB")
+        stat = ImageStat.Stat(img)
+        
+        # Obtener valores promedio de R, G, B
+        r_avg = stat.mean[0]
+        g_avg = stat.mean[1]
+        b_avg = stat.mean[2]
+        
+        # Calcular la proporción de verde
+        total_rgb = r_avg + g_avg + b_avg
+        if total_rgb == 0: # Evitar división por cero para imágenes completamente negras
+            return False
+            
+        green_proportion = g_avg / total_rgb
+        
+        # Una imagen es probablemente una planta si tiene una proporción de verde
+        # por encima de un umbral, y el verde es dominante sobre rojo y azul.
+        if green_proportion > green_threshold and g_avg > r_avg and g_avg > b_avg:
+            return True
+        
+        return False
+
+    except Exception as e:
+        print(f"Error al verificar la imagen: {e}")
+        return True # Si hay error al procesar, asumimos que es una planta para no bloquear
 
 # Inicializar datos si no existen
 if not os.path.exists(CHAT_FAQ):
@@ -202,7 +240,8 @@ def demo():
 @app.route("/analizar_demo/<imagen>")
 def analizar_demo(imagen):
     """Analiza una imagen de demostración."""
-    ruta = os.path.join(app.config["UPLOAD_FOLDER"], imagen)
+    # Buscar en la carpeta de imágenes de demo
+    ruta = os.path.join(DEMO_IMAGES_STATIC_FOLDER, imagen)
     
     if os.path.exists(ruta):
         resultados = detector.analizar_imagen_desde_archivo(ruta)
@@ -225,7 +264,16 @@ def analizar_archivo():
     ruta_guardada = os.path.join(app.config["UPLOAD_FOLDER"], archivo.filename)
     archivo.save(ruta_guardada)
 
-    # Análisis directo sin verificación de calidad
+    # Verificar si es una planta antes de analizar
+    if not is_likely_plant(ruta_guardada):
+        # Borrar la imagen si no es una planta para no ocupar espacio
+        try:
+            os.remove(ruta_guardada)
+        except:
+            pass
+        return render_template("no_planta.html")
+
+    # Análisis directo
     resultados = detector.analizar_imagen_desde_archivo(ruta_guardada)
     # Agregar recomendaciones automáticas
     resultados = agregar_recomendaciones_contextuales(resultados)
